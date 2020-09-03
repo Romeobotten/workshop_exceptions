@@ -27,6 +27,15 @@ public class Main {
 
         Person test = nameService.getNewRandomPerson();
         System.out.println(test);
+        nameService.addFemaleFirstName("Eva");
+        nameService.addMaleFirstName("Allan");
+        nameService.addFemaleFirstName("Lisa");
+        nameService.addLastName("Andersson");
+        nameService.addMaleFirstName("Johan");
+        nameService.addFemaleFirstName("Eva");
+        nameService.addLastName("Svensk");
+        nameService.addMaleFirstName("Kent");
+        nameService.addFemaleFirstName("Åsa");
 	}
 
 }
