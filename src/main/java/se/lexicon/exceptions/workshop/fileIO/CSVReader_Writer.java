@@ -38,9 +38,9 @@ public class CSVReader_Writer {
         }
             finally {
             try {
-            if (reader != null) {
-                reader.close();
-            }
+                if (reader != null) {
+                    reader.close();
+                }
             } catch (IOException e){
                 System.out.println(e.getMessage());
                 System.out.println("An error occurred!");
@@ -57,7 +57,7 @@ public class CSVReader_Writer {
 
         List<String> names=null;
 
-        try {
+        try { // reader declared inside try block
             BufferedReader reader = Files.newBufferedReader(Paths.get("firstname_female.txt"));
             names = reader.lines()
                     .flatMap(line -> Stream.of(line.split(",")))
@@ -70,7 +70,7 @@ public class CSVReader_Writer {
             System.out.println(e.getMessage());
             System.out.println("An error occurred!");
         }
-        return names;  //  No need for finally here, resourses declared inside try block
+        return names;  //  No need for finally here, resources declared inside try block
     }
 
     /**
@@ -80,17 +80,17 @@ public class CSVReader_Writer {
      * @return List <String> of last names
      * @throws IOException
      */
-    public static List<String> getLastNames() throws IOException{
+    public static List<String> getLastNames() throws IOException { // Throws handles in Main
 
         BufferedReader reader = null;
         List<String> names = null;
 
-//        try {
+//        try { Not here
             reader = Files.newBufferedReader(Paths.get("lastnames.txt"));
             names = reader.lines()
                     .flatMap(line -> Stream.of(line.split(",")))
                     .collect(Collectors.toList());
-//        } catch (FileNotFoundException e) {
+//        } catch (FileNotFoundException e) { // This code should be in Main
 //            e.printStackTrace();
 //            System.out.println("File not found!");
 //        } catch (IOException e){
@@ -98,7 +98,7 @@ public class CSVReader_Writer {
 //            System.out.println("An error occurred!");
 //        }
 
- //       finally{
+ //       finally {
             if(reader != null){
                 reader.close();
             }

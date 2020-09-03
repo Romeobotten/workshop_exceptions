@@ -2,8 +2,10 @@ package se.lexicon.exceptions.workshop.data_access;
 
 import se.lexicon.exceptions.workshop.domain.Gender;
 import se.lexicon.exceptions.workshop.domain.Person;
+import se.lexicon.exceptions.workshop.exceptions.DuplicateNameException;
 import se.lexicon.exceptions.workshop.fileIO.CSVReader_Writer;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -59,22 +61,16 @@ public class NameService {
      *
      * @param name
      */
-    public void addFemaleFirstName(String name) {
+    public void addFemaleFirstName(String name) throws DuplicateNameException {
 
-        try {
             if (femaleFirstNames.contains(name)) {
-                throw new DuplicateNameException("Are you an idiot?"); // Friendly message
+                throw new DuplicateNameException("Are you a complete idiot? " +
+                        name + " already exists!"); // Friendly message
             } else {
                 femaleFirstNames.add(name);
                 CSVReader_Writer.saveFemaleNames(femaleFirstNames);
                 System.out.println(name + " was added to textfile.");
             }
-
-        } catch (DuplicateNameException x) {
-            System.out.println(x.getMessage());
-            System.out.println(name + " was not added again to textfile.");
-        }
-
     }
 
     /**
@@ -84,21 +80,16 @@ public class NameService {
      *
      * @param name
      */
-    public void addMaleFirstName(String name) {
+    public void addMaleFirstName(String name) throws DuplicateNameException {
 
-        try {
             if (maleFirstNames.contains(name)) {
-                throw new DuplicateNameException("Are you totally lost?"); // Friendly message
+                throw new DuplicateNameException("Are you a total moron? "+
+                        name + " already exists!"); // Friendly message
             } else {
                 maleFirstNames.add(name);
                 CSVReader_Writer.saveMaleNames(maleFirstNames);
                 System.out.println(name + " was added to textfile.");
             }
-
-        } catch (DuplicateNameException x) {
-            System.out.println(x.getMessage());
-            System.out.println(name + " was not added again to textfile.");
-        }
     }
 
     /**
@@ -108,28 +99,23 @@ public class NameService {
      *
      * @param lastName
      */
-    public void addLastName(String lastName) {
+    public void addLastName(String lastName) throws DuplicateNameException {
 
-        try {
+//        try { // Not here
             if (lastNames.contains(lastName)) {
-                throw new DuplicateNameException("Are you stupid?"); // Friendly message
+                throw new DuplicateNameException("Are you ****ing stupid? "+
+                        lastName + " already exists!"); // Friendly message
             } else {
                 lastNames.add(lastName);
+                Collections.sort(lastNames); // Looks better in text file
                 CSVReader_Writer.saveLastNames(lastNames);
                 System.out.println(lastName + " was added to textfile.");
             }
 
-        } catch (DuplicateNameException x) {
-            System.out.println(x.getMessage());
-            System.out.println(lastName + " was not added again to textfile.");
-        }
+//        } catch (DuplicateNameException x) { // This code has moved to Main, try and catch
+//            System.out.println(x.getMessage());
+//            System.out.println(lastName + " was not added again to textfile.");
+//        }
     }
 }
 
-// user-defined exeption class
-class DuplicateNameException extends Exception {
-    public DuplicateNameException(String s) {
-        // Call constructor super
-        super(s + " This name already exists.");
-    }
-}

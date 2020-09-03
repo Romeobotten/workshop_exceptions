@@ -2,6 +2,7 @@ package se.lexicon.exceptions.workshop;
 
 import se.lexicon.exceptions.workshop.data_access.NameService;
 import se.lexicon.exceptions.workshop.domain.Person;
+import se.lexicon.exceptions.workshop.exceptions.DuplicateNameException;
 import se.lexicon.exceptions.workshop.fileIO.CSVReader_Writer;
 
 import java.io.IOException;
@@ -25,17 +26,42 @@ public class Main {
 
         NameService nameService = new NameService(maleFirstNames, femaleFirstNames, lastNames);
 
-        Person test = nameService.getNewRandomPerson();
+        Person test = nameService.getNewRandomPerson(); // This is working OK
         System.out.println(test);
-        nameService.addFemaleFirstName("Eva");
-        nameService.addMaleFirstName("Allan");
-        nameService.addFemaleFirstName("Lisa");
-        nameService.addLastName("Andersson");
-        nameService.addMaleFirstName("Johan");
-        nameService.addFemaleFirstName("Eva");
-        nameService.addLastName("Svensk");
-        nameService.addMaleFirstName("Kent");
-        nameService.addFemaleFirstName("Åsa");
-	}
 
+        try {
+                nameService.addFemaleFirstName("Ebba"); // This is working OK
+        } catch(DuplicateNameException x) {
+                System.out.println(x.getMessage());
+        }
+        try {
+            nameService.addMaleFirstName("Ali"); // This is working OK
+        } catch(DuplicateNameException x) {
+            System.out.println(x.getMessage());
+        }
+        try {
+            nameService.addLastName("Ali"); // This is working OK, I removed Ali before
+        } catch(DuplicateNameException x) {
+            System.out.println(x.getMessage());
+        }
+
+            test = nameService.getNewRandomPerson(); // This is working OK too again
+            System.out.println(test);
+
+        try {
+            nameService.addFemaleFirstName("Ella"); // Catching exception OK
+        } catch(DuplicateNameException x) {
+            System.out.println(x.getMessage()); // Friendly message?
+        }
+        try {
+            nameService.addMaleFirstName("Ali"); // Catching exception OK
+        } catch(DuplicateNameException x) {
+            System.out.println(x.getMessage());
+        }
+        try {
+            nameService.addLastName("Lind"); // Catching exception OK
+        } catch(DuplicateNameException x) {
+            System.out.println(x.getMessage());
+        }
+	}
 }
